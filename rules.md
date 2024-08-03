@@ -9,6 +9,7 @@ Um elevador de 10 andares (exemplo)
   - A primeira pessoa que entrar no elevador, tem que selecionar o andar se não ele fica parado (Até alguém chamar). 
   - Se entrar em um elevador que já tenha pessoas e não selecionar o andar, ao fechar as portas, vai seguindo o fluxo. 
   - Se o elevador está subindo e alguém coloca um andar a baixo, ele primeiro termina de subir para descer depois.
+  - Não incrementar o andar caso já tenha sido apertado
   <!-- - Se passar 3 minutos e não tiver movimentação, ele volta para o térreo. -->
   
 - Requisitos técnicos
