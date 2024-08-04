@@ -1,28 +1,28 @@
-package domain_test
+package models_test
 
 import (
-	"elevator/domain"
+	"elevator/models"
 	"testing"
 
 	"github.com/stretchr/testify/require"
 )
 
 func TestValidateIfActionIsEmpty(t *testing.T) {
-	action := domain.NewAction()
+	action := models.NewAction()
 	err := action.Validate()
 
 	require.Error(t, err)
 }
 
 func TestValidateAction(t *testing.T) {
-	firstAction := domain.NewAction()
+	firstAction := models.NewAction()
 
-	firstAction.Direction = domain.Down
+	firstAction.Direction = models.Down
 	firstAction.Floor = 5
 
-	secondAction := domain.NewAction()
+	secondAction := models.NewAction()
 
-	secondAction.Direction = domain.Down
+	secondAction.Direction = models.Down
 	secondAction.Floor = 2
 
 	require.NoError(t, firstAction.Validate())

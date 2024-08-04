@@ -1,28 +1,28 @@
-package domain_test
+package models_test
 
 import (
-	"elevator/domain"
+	"elevator/models"
 	"testing"
 
 	"github.com/stretchr/testify/require"
 )
 
 func TestOrganizeQueue(t *testing.T) {
-	firstAction := domain.NewAction()
-	secondAction := domain.NewAction()
-	thrirdAction := domain.NewAction()
-	fourthAction := domain.NewAction()
+	firstAction := models.NewAction()
+	secondAction := models.NewAction()
+	thrirdAction := models.NewAction()
+	fourthAction := models.NewAction()
 
-	firstAction.Direction = domain.Up
+	firstAction.Direction = models.Up
 	firstAction.Floor = 5
 
-	secondAction.Direction = domain.Down
+	secondAction.Direction = models.Down
 	secondAction.Floor = 2
 
-	thrirdAction.Direction = domain.Up
+	thrirdAction.Direction = models.Up
 	thrirdAction.Floor = 9
 
-	fourthAction.Direction = domain.Up
+	fourthAction.Direction = models.Up
 	fourthAction.Floor = 7
 
 	require.NoError(t, firstAction.Validate())
@@ -30,14 +30,14 @@ func TestOrganizeQueue(t *testing.T) {
 	require.NoError(t, thrirdAction.Validate())
 	require.NoError(t, fourthAction.Validate())
 
-	elevator := domain.NewElevator()
+	elevator := models.NewElevator()
 
-	elevator.ActionQueue = []domain.Action{*firstAction, *secondAction, *thrirdAction, *fourthAction}
-	elevator.CurrentDirection = domain.Up
+	elevator.ActionQueue = []models.Action{*firstAction, *secondAction, *thrirdAction, *fourthAction}
+	elevator.CurrentDirection = models.Up
 	elevator.CurrentFloor = 3
-	elevator.State = domain.Moving
+	elevator.State = models.Moving
 
-	organizedActionQueue := domain.Reorganize(elevator)
+	organizedActionQueue := models.Reorganize(elevator)
 
 	require.NoError(t, elevator.Validate())
 
