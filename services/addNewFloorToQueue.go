@@ -1,10 +1,10 @@
 package services
 
 import (
-	"elevator/models"
+	"elevator/domain"
 )
 
-func AddNewActionToQueue(elevator *models.Elevator, newAction *models.Action) *models.Elevator {
+func AddNewActionToQueue(elevator *domain.Elevator, newAction *domain.Action) *domain.Elevator {
 	if elevator.CurrentFloor == newAction.Floor {
 		handleSameFloorAction(elevator, newAction)
 		return elevator
@@ -16,25 +16,25 @@ func AddNewActionToQueue(elevator *models.Elevator, newAction *models.Action) *m
 	return elevator
 }
 
-func handleSameFloorAction(elevator *models.Elevator, newAction *models.Action) {
-	if elevator.State == models.Moving {
+func handleSameFloorAction(elevator *domain.Elevator, newAction *domain.Action) {
+	if elevator.State == domain.Moving {
 		toggleDirection(newAction, elevator.CurrentDirection)
 		elevator.ActionQueue = append(elevator.ActionQueue, *newAction)
 	}
 }
 
-func setNewActionDirection(elevator *models.Elevator, newAction *models.Action) {
+func setNewActionDirection(elevator *domain.Elevator, newAction *domain.Action) {
 	if elevator.CurrentFloor > newAction.Floor {
-		newAction.Direction = models.Down
+		newAction.Direction = domain.Down
 	} else {
-		newAction.Direction = models.Up
+		newAction.Direction = domain.Up
 	}
 }
 
-func toggleDirection(action *models.Action, currentDirection models.Direction) {
-	if currentDirection == models.Up {
-		action.Direction = models.Down
+func toggleDirection(action *domain.Action, currentDirection domain.Direction) {
+	if currentDirection == domain.Up {
+		action.Direction = domain.Down
 	} else {
-		action.Direction = models.Up
+		action.Direction = domain.Up
 	}
 }
