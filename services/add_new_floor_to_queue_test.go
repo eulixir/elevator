@@ -98,18 +98,3 @@ func Test_set_new_action_direction_to_up_when_elevator_is_moving_down_and_new_fl
 
 	assert.Equal(t, elevator.ActionQueue, []domain.Action{*existingAction, expectedAction}, "Expected action queue to contain the existing action and the new action with direction set to down")
 }
-
-func setupElevator(direction domain.Direction, floor int, state domain.State) *domain.Elevator {
-	elevator := domain.NewElevator()
-	elevator.CurrentDirection = direction
-	elevator.CurrentFloor = floor
-	elevator.State = state
-	return elevator
-}
-
-func setupAction(direction domain.Direction, floor int) *domain.Action {
-	action := domain.NewAction()
-	action.Direction = direction
-	action.Floor = floor
-	return action
-}

@@ -1,52 +1,50 @@
 package services_test
 
 import (
+	"testing"
+
 	"elevator/domain"
 	"elevator/services"
-	"testing"
 
 	"github.com/stretchr/testify/require"
 )
 
-func TestOrganizeQueue(t *testing.T) {
-	firstAction := domain.NewAction()
-	secondAction := domain.NewAction()
-	thrirdAction := domain.NewAction()
-	fourthAction := domain.NewAction()
-
-	firstAction.Direction = domain.Up
-	firstAction.Floor = 5
-
-	secondAction.Direction = domain.Down
-	secondAction.Floor = 2
-
-	thrirdAction.Direction = domain.Up
-	thrirdAction.Floor = 9
-
-	fourthAction.Direction = domain.Up
-	fourthAction.Floor = 7
+func Test_organize_queue(t *testing.T) {
+	firstAction := setupAction(domain.Up, 5)
+	secondAction := setupAction(domain.Down, 2)
+	thirdAction := setupAction(domain.Up, 9)
+	fourthAction := setupAction(domain.Up, 7)
 
 	require.NoError(t, firstAction.Validate())
 	require.NoError(t, secondAction.Validate())
-	require.NoError(t, thrirdAction.Validate())
+	require.NoError(t, thirdAction.Validate())
 	require.NoError(t, fourthAction.Validate())
 
-	elevator := domain.NewElevator()
-
-	elevator.ActionQueue = []domain.Action{*firstAction, *secondAction, *thrirdAction, *fourthAction}
-	elevator.CurrentDirection = domain.Up
-	elevator.CurrentFloor = 3
-	elevator.State = domain.Moving
+	elevator := setupElevator(domain.Up, 3, domain.Moving)
+	elevator.ActionQueue = []domain.Action{*firstAction, *secondAction, *thirdAction, *fourthAction}
 
 	organizedActionQueue := services.Reorganize(elevator)
 
 	require.NoError(t, elevator.Validate())
 
-	expectQueue := []int{5, 7, 9}
+	expectedUpQueue := []int{5, 7, 9}
+	expectedDownQueue := []int{2}
 
-	require.Equal(t, organizedActionQueue[0], expectQueue)
+	require.Equal(t, expectedUpQueue, organizedActionQueue[0], "Expected actions going up to be organized correctly")
+	require.Equal(t, expectedDownQueue, organizedActionQueue[1], "Expected actions going down to be organized correctly")
+}
 
-	expectQueue = []int{2}
+func setupElevator(direction domain.Direction, floor int, state domain.State) *domain.Elevator {
+	elevator := domain.NewElevator()
+	elevator.CurrentDirection = direction
+	elevator.CurrentFloor = floor
+	elevator.State = state
+	return elevator
+}
 
-	require.Equal(t, organizedActionQueue[1], expectQueue)
+func setupAction(direction domain.Direction, floor int) *domain.Action {
+	action := domain.NewAction()
+	action.Direction = direction
+	action.Floor = floor
+	return action
 }
