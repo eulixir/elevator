@@ -21,7 +21,7 @@ type Elevator struct {
 }
 
 func NewElevator() *Elevator {
-	return &Elevator{}
+	return &Elevator{ActionQueue: []Action{}}
 }
 
 func (elevator *Elevator) Validate() error {
@@ -32,12 +32,6 @@ func (elevator *Elevator) Validate() error {
 	}
 
 	return nil
-}
-
-func sortDescending(arr []int) {
-	sort.Slice(arr, func(i, j int) bool {
-		return arr[i] > arr[j]
-	})
 }
 
 func Reorganize(elevator *Elevator) (result [2][]int) {
@@ -55,4 +49,10 @@ func Reorganize(elevator *Elevator) (result [2][]int) {
 	}
 
 	return
+}
+
+func sortDescending(arr []int) {
+	sort.Slice(arr, func(i, j int) bool {
+		return arr[i] > arr[j]
+	})
 }
