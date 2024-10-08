@@ -25,7 +25,6 @@ func Test_move_elevator_to_next_floor(t *testing.T) {
 }
 
 func Test_dont_move_elevator_to_next_floor_without_items_in_queue(t *testing.T) {
-
 	elevator := setupElevator(domain.Down, 7, domain.Stopped)
 
 	assert.Empty(t, elevator.ActionQueue)
